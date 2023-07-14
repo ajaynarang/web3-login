@@ -3,7 +3,7 @@ import { useDisconnect } from "wagmi";
 import styles from "./header.module.css";
 
 export default function Header() {
-  const { data: session, status } = useSession();
+  const { data: session, status }: { data: any; status: string } = useSession();
   const { disconnect } = useDisconnect();
 
   console.log("session", session);
@@ -18,7 +18,7 @@ export default function Header() {
           <span>
             <small>Signed in as</small>
             <br />
-            <strong>{session?.user?.email ?? session?.user?.name}</strong>
+            <strong>{`${session?.user?.name} (${session?.user?.id})`}</strong>
           </span>
           <a
             href={`/api/auth/signout`}

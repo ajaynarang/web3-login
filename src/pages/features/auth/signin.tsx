@@ -1,6 +1,6 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { getCsrfToken, signIn, useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SiweMessage } from "siwe";
 import { useAccount, useDisconnect, useNetwork, useSignMessage } from "wagmi";
 
@@ -11,7 +11,10 @@ function SignIn() {
   const { disconnect } = useDisconnect();
   const { data: session, status } = useSession();
 
-  const handleLogin = async () => {
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleWalletLogin = async () => {
     try {
       const message = new SiweMessage({
         domain: window.location.host,
@@ -27,7 +30,7 @@ function SignIn() {
         message: message.prepareMessage(),
       });
 
-      signIn("credentials", {
+      signIn("web3login", {
         message: JSON.stringify(message),
         redirect: false,
         signature,
@@ -38,10 +41,23 @@ function SignIn() {
     }
   };
 
+  const handleLogin = async (e: any) => {
+    try {
+      signIn("web2login", {
+        username: userName,
+        password: password,
+        redirect: false
+      });
+      e.preventDefault();
+    } catch (error) {
+      window.alert(error);
+    }
+  };
+
   useEffect(() => {
     console.log(isConnected);
     if (isConnected && !session) {
-      handleLogin();
+      handleWalletLogin();
     }
   }, [isConnected]);
 
@@ -63,14 +79,16 @@ function SignIn() {
                     htmlFor="email"
                     className="block text-sm mb-2 dark:text-white"
                   >
-                    Email address
+                    Username
                   </label>
                   <div className="relative">
                     <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      className="py-3 px-4 block w-full border-gray-500 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                      type="text"
+                      id="userName"
+                      name="userName"
+                      value={userName}
+                      onChange={(e) => setUserName(e.target.value)}
+                      className="py-3 px-4 block w-full border border-gray-500 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                       required
                       aria-describedby="email-error"
                     ></input>
@@ -97,7 +115,9 @@ function SignIn() {
                       type="password"
                       id="password"
                       name="password"
-                      className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="py-3 px-4 block w-full border border-gray-500 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                       required
                       aria-describedby="password-error"
                     ></input>
@@ -123,8 +143,8 @@ function SignIn() {
                   </div>
                 </div>
                 <button
-                  type="submit"
                   className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                  onClick={handleLogin}
                 >
                   Sign in
                 </button>
@@ -156,3 +176,6 @@ export async function getServerSideProps(context: any) {
 }
 
 export default SignIn;
+function userState(): { data: any; status: any } {
+  throw new Error("Function not implemented.");
+}
