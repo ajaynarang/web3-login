@@ -2,13 +2,12 @@ import "@/styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import type { AppProps } from "next/app";
 
-import { connectorsForWallets } from "@rainbow-me/rainbowkit";
-import "@rainbow-me/rainbowkit/styles.css";
 import {
-  coinbaseWallet,
-  ledgerWallet,
-  metaMaskWallet,
-} from "@rainbow-me/rainbowkit/wallets";
+  DisclaimerComponent,
+  connectorsForWallets,
+} from "@rainbow-me/rainbowkit";
+import "@rainbow-me/rainbowkit/styles.css";
+import { coinbaseWallet, metaMaskWallet } from "@rainbow-me/rainbowkit/wallets";
 import { configureChains, createConfig } from "wagmi";
 import { goerli, mainnet } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
@@ -42,16 +41,26 @@ const wallets = [
   },
 ];
 
-const demoAppInfo = {
-  appName: "Rainbowkit Demo",
+const disclaimer: DisclaimerComponent = ({ Text, Link }) => (
+  <Text>
+    By connecting your wallet, you agree to the{" "}
+    <Link href="https://termsofservice.xyz">Terms of Service</Link> and
+    acknowledge you have read and understand the protocol{" "}
+    <Link href="https://disclaimer.xyz">Disclaimer</Link>
+  </Text>
+);
+
+const appInfo = {
+  appName: "Connect via Web3 Wallet",
+  learnMoreUrl: "https://learn.metamask.io/lessons/what-is-web3",
 };
 
 const connectors = connectorsForWallets([
   ...wallets,
-  {
-    groupName: "Other Popular Wallets",
-    wallets: [ledgerWallet({ projectId, chains })],
-  },
+  // {
+  //   groupName: "Other Popular Wallets",
+  //   wallets: [ledgerWallet({ projectId, chains })],
+  // },
 ]);
 
 const wagmiConfig = createConfig({
@@ -67,7 +76,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <SessionProvider refetchInterval={0} session={pageProps.session}>
         <RainbowKitProvider
           chains={chains}
-          appInfo={demoAppInfo}
+          appInfo={appInfo}
           theme={lightTheme({
             accentColor: "#fc6e01",
             accentColorForeground: "white",
