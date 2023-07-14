@@ -7,7 +7,11 @@ import {
   connectorsForWallets,
 } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
-import { coinbaseWallet, metaMaskWallet } from "@rainbow-me/rainbowkit/wallets";
+import {
+  coinbaseWallet,
+  metaMaskWallet,
+  walletConnectWallet,
+} from "@rainbow-me/rainbowkit/wallets";
 import { configureChains, createConfig } from "wagmi";
 import { goerli, mainnet } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
@@ -20,6 +24,7 @@ import { RainbowKitProvider, lightTheme } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
 import { SessionProvider } from "next-auth/react";
 import { WagmiConfig } from "wagmi";
+import { AnimatePresence } from "framer-motion";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
@@ -38,6 +43,10 @@ const wallets = [
       metaMaskWallet({ projectId, chains }),
       coinbaseWallet({ appName: projectId, chains }),
     ],
+  },
+  {
+    groupName: "Other Popular Wallets",
+    wallets: [walletConnectWallet({ projectId, chains })],
   },
 ];
 
@@ -85,7 +94,9 @@ export default function App({ Component, pageProps }: AppProps) {
             overlayBlur: "large",
           })}
         >
-          <Component {...pageProps} />
+          <AnimatePresence mode="wait" initial={false}>
+            <Component {...pageProps} />
+          </AnimatePresence>
         </RainbowKitProvider>
       </SessionProvider>
     </WagmiConfig>

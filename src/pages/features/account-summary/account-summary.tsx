@@ -1,6 +1,6 @@
 import { getCsrfToken, useSession } from "next-auth/react";
 function AccountSummary() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   return (
     <>

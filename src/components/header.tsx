@@ -1,9 +1,9 @@
 import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 import { useDisconnect } from "wagmi";
-import styles from "./header.module.css";
 
 export default function Header() {
-  const { data: session, status }: { data: any; status: string } = useSession();
+  const { data: session }: { data: any; status: string } = useSession();
   const { disconnect } = useDisconnect();
 
   console.log("session", session);
@@ -18,19 +18,34 @@ export default function Header() {
           <span>
             <small>Signed in as</small>
             <br />
-            <strong>{`${session?.user?.name} (${session?.user?.id})`}</strong>
+            <strong>{`${session?.user?.username || session?.user?.id}`}</strong>
+            {session?.user?.walletId
+              ? ` (Wallet ID: ${session?.user?.walletId})`
+              : ""}
           </span>
-          <a
-            href={`/api/auth/signout`}
-            className={styles.button}
-            onClick={(e) => {
-              e.preventDefault();
-              disconnect();
-              signOut();
-            }}
-          >
-            Sign out
-          </a>
+
+          <div className="flex flex-row justify-end ml-auto sm:justify-end sm:gap-x-3 sm:order-3">
+            {!session?.user?.walletId && (
+              <button
+                type="button"
+                className="py-3 px-4 inline-flex justify-center items-center gap-2 hover:text-white rounded-md border border-transparent font-semibold  hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+              >
+                <Link href="/features/profile/link-wallet">Link Wallet</Link>
+              </button>
+            )}
+
+            <a
+              href={`/api/auth/signout`}
+              className="py-3 px-4 inline-flex justify-center items-center gap-2 hover:text-white rounded-md border border-transparent font-semibold  hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+              onClick={(e) => {
+                e.preventDefault();
+                disconnect();
+                signOut();
+              }}
+            >
+              Sign out
+            </a>
+          </div>
         </div>
       </nav>
     </header>

@@ -3,6 +3,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { getCsrfToken } from "next-auth/react";
 import { SiweMessage } from "siwe";
+import { USER_PREFIX } from "../users/user-prefix";
 
 export default async function auth(req: any, res: any) {
   let providers = [
@@ -32,6 +33,7 @@ export default async function auth(req: any, res: any) {
             domain: nextAuthUrl.host,
             nonce: await getCsrfToken({ req }),
           });
+
           if (result.success) {
             return {
               id: message.address,
@@ -52,14 +54,24 @@ export default async function auth(req: any, res: any) {
       },
       async authorize(credentials) {
         try {
-          console.log("web2login", credentials);
+          let user = await kv.get<{
+            id: string;
+            username: string;
+            name: string;
+            password: string;
+            walletId: string;
+          }>(USER_PREFIX + credentials?.username || "");
+
+          if (!user) {
+            return null;
+          }
 
           if (
-            credentials?.username == "narangajay" &&
-            credentials.password == "ajay"
+            credentials?.username == user.username &&
+            credentials.password == user.password
           ) {
             return {
-              id: credentials.username,
+              ...user,
             };
           }
 
@@ -86,15 +98,21 @@ export default async function auth(req: any, res: any) {
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
       async session({ session, token }: { session: any; token: any }) {
-        console.log("token", token);
+        const user = await kv.get<{
+          id: string;
+          username: string;
+          name: string;
+          password: string;
+          walletId: string;
+        }>(USER_PREFIX + token.sub);
 
-        const user = await kv.get<{ id: string; name: string }>(token.sub);
+        console.log("NextAuth > user", user);
 
         session.address = token.sub;
         session.user.id = token.sub;
-        session.user.name = user?.name || undefined;
-
-        console.log("session", session);
+        session.user.username = user?.username;
+        session.user.name = user?.name;
+        session.user.walletId = user?.walletId;
         return session;
       },
     },
