@@ -2,32 +2,22 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { getCsrfToken, signIn, useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { SiweMessage } from "siwe";
-import {
-  useAccount,
-  useConnect,
-  useDisconnect,
-  useNetwork,
-  useSignMessage,
-} from "wagmi";
-import { InjectedConnector } from "wagmi/connectors/injected";
+import { useAccount, useDisconnect, useNetwork, useSignMessage } from "wagmi";
 
 function SignIn() {
   const { signMessageAsync } = useSignMessage();
   const { chain } = useNetwork();
   const { address, isConnected } = useAccount();
-  const { connect } = useConnect({
-    connector: new InjectedConnector(),
-  });
   const { disconnect } = useDisconnect();
   const { data: session, status } = useSession();
 
   const handleLogin = async () => {
     try {
-      const callbackUrl = "/protected";
       const message = new SiweMessage({
         domain: window.location.host,
         address: address,
-        statement: "Sign in with Ethereum to the app.",
+        statement:
+          "Sign in with your digital wallet to login to Fiserv application.",
         uri: window.location.origin,
         version: "1",
         chainId: chain?.id,
@@ -36,11 +26,11 @@ function SignIn() {
       const signature = await signMessageAsync({
         message: message.prepareMessage(),
       });
+
       signIn("credentials", {
         message: JSON.stringify(message),
         redirect: false,
         signature,
-        callbackUrl,
       });
     } catch (error) {
       disconnect();
