@@ -75,6 +75,7 @@ function SignIn() {
           if (data?.walletId) {
             handleWalletLogin();
           } else {
+            setError(`Invalid Wallet ID!`);
             disconnect();
           }
         });
