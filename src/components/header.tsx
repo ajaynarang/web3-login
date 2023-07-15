@@ -7,7 +7,6 @@ export default function Header() {
   const { data: session }: { data: any; status: string } = useSession();
   const { disconnect } = useDisconnect();
   const router = useRouter();
-  console.log("session", session);
 
   return (
     <header className="sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap z-[48] w-full border-b text-sm py-2.5 sm:py-4 lg:pl-64 dark:bg-gray-800 dark:border-gray-700">

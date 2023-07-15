@@ -18,7 +18,6 @@ function LinkWallet({ laterCallback }: { laterCallback: any }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("wallet id updated");
         reloadSession();
         router.push("/");
       })

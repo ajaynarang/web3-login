@@ -13,9 +13,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     user.id = user.id ||  user.username;
 
-    console.log("register",user);
     const result = await kv.set(USER_PREFIX + user.id, { ...user });
-    console.log(result);
     return res.status(200).json({ result });
   }
 
