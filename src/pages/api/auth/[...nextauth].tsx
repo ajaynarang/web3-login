@@ -34,6 +34,10 @@ export default async function auth(req: any, res: any) {
             nonce: await getCsrfToken({ req }),
           });
 
+          console.log("web3 login > credentials", credentials);
+          console.log("web3 login > result", result);
+          console.log("web3 login > nextAuthUrl", nextAuthUrl);
+
           if (result.success) {
             return {
               id: message.address,
@@ -61,6 +65,8 @@ export default async function auth(req: any, res: any) {
             password: string;
             walletId: string;
           }>(USER_PREFIX + credentials?.username || "");
+
+          
 
           if (!user) {
             return null;
