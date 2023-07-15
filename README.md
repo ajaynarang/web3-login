@@ -1,38 +1,55 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Prototype showcasing Web3 wallet login functionality
 
-## Getting Started
+This project is a prototype that demonstrates Web3 wallet login functionality. The goal of this project is to allow new users to register, link their Wallet ID, and subsequently login to the application using their linked wallet.
 
-First, run the development server:
+### Features:
+
+- New User Registration: New users can create an account by providing their necessary details.
+  
+- Wallet Linking: Users have the option to link their Web3 Wallet ID to their account.
+
+- Login with Wallet: Once a user has linked their wallet, they can log in to the application by simply authenticating with their connected wallet.
+
+## Usage
+- **Open Demo Application**: Access this [demo](https://web3-login-five.vercel.app/) link to try out the application, or follow the instructions in the local setup section below.
+
+- **Wallet Setup** *(Skip if wallet is already installed)*: To begin, click on the 'Sign In with Web3 Wallet' button. This will provide you with the necessary links to download wallet applications as Chrome extensions or mobile apps. (We recommend starting with MetaMask).
+  - **Install the Wallet:** Download and install the chosen wallet extension or mobile application on your device.
+  - **Launch the Wallet:** Open the installed wallet and follow the provided instructions to begin the setup process.
+  - **Generate Seed Phrases:** You will be prompted to generate a set of seed phrases (aka a recovery phrase). These seed phrases are important for wallet restoration.
+  - **Verify Seed Phrases:** After securely storing the seed phrases, the wallet will request you to verify them by entering them in the correct order. 
+- **Register as a New User:** Click on `New User` and provide the necessary details.
+
+- **Sign In:** Use your chosen username and password to sign in.
+
+- **Link Wallet:** On the `Home` page, click on the `Link Wallet` button and provide your Wallet ID (which should be visible in your wallet).
+
+- **Try 'Sign In with Web3 Wallet' feature**: Sign out from the application and attempt to sign in again using the `Sign In with Web3 Wallet` feature.  **MetaMask** should prompt you to `sign a message` to verify wallet ownership.
+
+**Voila!:** If everything goes smoothly, you should now be redirected to the `Home` page of the application.
+
+
+## Local setup
+
+Install dependencies
+```bash
+npm run install
+# or
+yarn install 
+```
+Run the development server:
+```
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Deploy
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Project is configured to deploy in vercel. Push the changes to `main` branch and it will automatically deploy the changes.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Use this [demo](https://web3-login-five.vercel.app/) link
