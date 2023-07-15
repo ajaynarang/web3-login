@@ -1,4 +1,4 @@
-import { getCsrfToken, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -7,6 +7,11 @@ function LinkWallet({ laterCallback }: { laterCallback: any }) {
   const { data: session }: { data: any; status: string } = useSession();
   const [walletId, setWalletId] = useState("");
   const router = useRouter();
+
+  const reloadSession = () => {
+    const event = new Event("visibilitychange");
+    document.dispatchEvent(event);
+  };
 
   async function linkWallet(e: any) {
     fetch("/api/users/link", {
@@ -19,6 +24,7 @@ function LinkWallet({ laterCallback }: { laterCallback: any }) {
       .then((response) => response.json())
       .then((data) => {
         console.log("wallet id updated");
+        reloadSession();
         router.push("/");
       })
       .catch((error) => {
