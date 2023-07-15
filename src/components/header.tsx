@@ -30,7 +30,7 @@ export default function Header() {
               <button
                 type="button"
                 className="py-3 px-4 inline-flex justify-center items-center gap-2
-                hover:text-white rounded-md border border-transparent font-semibold
+                rounded-md border border-transparent font-semibold
                 hover:text-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
               >
                 <Link href="/features/users/link-wallet">Link Wallet</Link>
@@ -40,7 +40,7 @@ export default function Header() {
             <button
               type="button"
               className="py-3 px-4 inline-flex justify-center items-center gap-2
-                hover:text-white rounded-md border border-transparent font-semibold
+                 rounded-md border border-transparent font-semibold
                 hover:text-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
               onClick={(e) => {
                 e.preventDefault();
