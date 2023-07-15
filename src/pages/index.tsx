@@ -2,8 +2,7 @@ import Layout from "@/components/layout";
 import AccountSummary from "@/pages/features/account-summary/account-summary";
 import { getCsrfToken, useSession } from "next-auth/react";
 import { useState } from "react";
-import SignIn from "./features/auth/signin";
-import { motion } from "framer-motion";
+import SignIn from "./features/users/signin";
 
 function Home() {
   const { data: session }: { data: any; status: string } = useSession();

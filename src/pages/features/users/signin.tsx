@@ -202,7 +202,9 @@ function SignIn() {
 
                     return (
                       <div
-                        className="inline-flex justify-center items-center rounded-md border border-orange-500 font-semibold text-gray-800 hover:text-white hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                        className="inline-flex justify-center items-center rounded-md border border-orange-500 font-semibold text-gray-800 hover:text-white 
+                        hover:text-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 
+                        focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                         {...(!ready && {
                           "aria-hidden": true,
                           style: {
@@ -218,7 +220,10 @@ function SignIn() {
                               <button
                                 onClick={openConnectModal}
                                 type="button"
-                                className="w-full py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold  hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                                className="w-full py-3 px-4 inline-flex justify-center items-center gap-2 
+                                rounded-md border border-transparent font-semibold  hover:text-orange-500 
+                                focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 
+                                transition-all text-sm dark:focus:ring-offset-gray-800"
                               >
                                 Sign In with Web3 Wallet
                               </button>
@@ -284,7 +289,7 @@ function SignIn() {
       </div>
       <div className="py-3 w-full flex justify-end items-center ">
         <Link
-          href="/features/profile/register"
+          href="/features/users/register"
           className="text-sm text-orange-500 decoration-2 hover:underline font-medium"
         >
           New User?
@@ -292,14 +297,6 @@ function SignIn() {
       </div>
     </main>
   );
-}
-
-export async function getServerSideProps(context: any) {
-  return {
-    props: {
-      csrfToken: await getCsrfToken(context),
-    },
-  };
 }
 
 export default SignIn;

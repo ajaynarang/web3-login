@@ -1,5 +1,5 @@
 import Layout from "@/components/layout";
-import { getCsrfToken, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -131,14 +131,6 @@ function Register() {
       </main>
     </Layout>
   );
-}
-
-export async function getServerSideProps(context: any) {
-  return {
-    props: {
-      csrfToken: await getCsrfToken(context),
-    },
-  };
 }
 
 export default Register;

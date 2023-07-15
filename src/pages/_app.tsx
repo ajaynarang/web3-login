@@ -1,40 +1,29 @@
 import "@/styles/globals.css";
-import "@rainbow-me/rainbowkit/styles.css";
-import type { AppProps } from "next/app";
-
-import {
-  DisclaimerComponent,
-  connectorsForWallets,
-} from "@rainbow-me/rainbowkit";
+import { connectorsForWallets } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
 import {
   coinbaseWallet,
   metaMaskWallet,
   walletConnectWallet,
 } from "@rainbow-me/rainbowkit/wallets";
+import type { AppProps } from "next/app";
 import { configureChains, createConfig } from "wagmi";
-import { goerli, mainnet } from "wagmi/chains";
+import { mainnet } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
-
-import "@/styles/globals.css";
-import "@rainbow-me/rainbowkit/styles.css";
 import "./../styles/globals.css";
 
 import { RainbowKitProvider, lightTheme } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
+import { AnimatePresence } from "framer-motion";
 import { SessionProvider } from "next-auth/react";
 import { WagmiConfig } from "wagmi";
-import { AnimatePresence } from "framer-motion";
-
-const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [
-    mainnet,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" ? [goerli] : []),
-  ],
-  [publicProvider()]
-);
 
 const projectId = "256e3eeb8618b654b7ca950433144fff";
+
+const { chains, publicClient, webSocketPublicClient } = configureChains(
+  [mainnet],
+  [publicProvider()]
+);
 
 const wallets = [
   {
@@ -48,29 +37,18 @@ const wallets = [
     groupName: "Other Popular Wallets",
     wallets: [walletConnectWallet({ projectId, chains })],
   },
+  // {
+  //   groupName: "Other Popular Wallets",
+  //   wallets: [ledgerWallet({ projectId, chains })],
+  // },
 ];
-
-const disclaimer: DisclaimerComponent = ({ Text, Link }) => (
-  <Text>
-    By connecting your wallet, you agree to the{" "}
-    <Link href="https://termsofservice.xyz">Terms of Service</Link> and
-    acknowledge you have read and understand the protocol{" "}
-    <Link href="https://disclaimer.xyz">Disclaimer</Link>
-  </Text>
-);
 
 const appInfo = {
   appName: "Connect via Web3 Wallet",
   learnMoreUrl: "https://learn.metamask.io/lessons/what-is-web3",
 };
 
-const connectors = connectorsForWallets([
-  ...wallets,
-  // {
-  //   groupName: "Other Popular Wallets",
-  //   wallets: [ledgerWallet({ projectId, chains })],
-  // },
-]);
+const connectors = connectorsForWallets([...wallets]);
 
 const wagmiConfig = createConfig({
   autoConnect: false,
@@ -89,9 +67,9 @@ export default function App({ Component, pageProps }: AppProps) {
           theme={lightTheme({
             accentColor: "#fc6e01",
             accentColorForeground: "white",
-            borderRadius: "large",
+            borderRadius: "small",
             fontStack: "system",
-            overlayBlur: "large",
+            overlayBlur: "small",
           })}
         >
           <AnimatePresence mode="wait" initial={false}>

@@ -29,7 +29,7 @@ export default function Layout({ children }: Props) {
             >
               <div className="px-6">
                 <a
-                  className="flex-none text-xl font-semibold dark:text-white"
+                  className="flex-none text-xl font-semibold text-orange-500"
                   href="#"
                 >
                   Fiserv

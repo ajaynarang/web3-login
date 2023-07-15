@@ -1,11 +1,12 @@
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useDisconnect } from "wagmi";
 
 export default function Header() {
   const { data: session }: { data: any; status: string } = useSession();
   const { disconnect } = useDisconnect();
-
+  const router = useRouter();
   console.log("session", session);
 
   return (
@@ -28,23 +29,42 @@ export default function Header() {
             {!session?.user?.walletId && (
               <button
                 type="button"
-                className="py-3 px-4 inline-flex justify-center items-center gap-2 hover:text-white rounded-md border border-transparent font-semibold  hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                className="py-3 px-4 inline-flex justify-center items-center gap-2
+                hover:text-white rounded-md border border-transparent font-semibold
+                hover:text-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
               >
-                <Link href="/features/profile/link-wallet">Link Wallet</Link>
+                <Link href="/features/users/link-wallet">Link Wallet</Link>
               </button>
             )}
 
-            <a
+            <button
+              type="button"
+              className="py-3 px-4 inline-flex justify-center items-center gap-2
+                hover:text-white rounded-md border border-transparent font-semibold
+                hover:text-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+              onClick={(e) => {
+                e.preventDefault();
+                disconnect();
+                signOut({ redirect: false }).then(() => router.push(`/`));
+              }}
+            >
+              <Link href="/features/users/link-wallet">Sign out</Link>
+            </button>
+
+            {/* <a
               href={`/api/auth/signout`}
-              className="py-3 px-4 inline-flex justify-center items-center gap-2 hover:text-white rounded-md border border-transparent font-semibold  hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+              className="py-3 px-4 inline-flex justify-center items-center gap-2 hover:text-white
+              rounded-md border border-transparent font-semibold
+               hover:text-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
               onClick={(e) => {
                 e.preventDefault();
                 disconnect();
                 signOut();
+                router.push(`/api/auth/signout`);
               }}
             >
               Sign out
-            </a>
+            </a> */}
           </div>
         </div>
       </nav>

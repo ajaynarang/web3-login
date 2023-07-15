@@ -104,13 +104,4 @@ function LinkWallet({ laterCallback }: { laterCallback: any }) {
     </main>
   );
 }
-
-export async function getServerSideProps(context: any) {
-  return {
-    props: {
-      csrfToken: await getCsrfToken(context),
-    },
-  };
-}
-
 export default LinkWallet;

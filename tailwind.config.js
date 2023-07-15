@@ -10,5 +10,6 @@ module.exports = {
       accentColor: "#fc6e01",
     },
   },
+
   plugins: [],
 };

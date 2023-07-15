@@ -1,5 +1,4 @@
 /* eslint-disable import/no-anonymous-default-export */
-// This is an example of how to read a JSON Web Token from an API route
 import { kv } from "@vercel/kv";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";

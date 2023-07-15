@@ -1,7 +1,4 @@
-import { getCsrfToken, useSession } from "next-auth/react";
 function AccountSummary() {
-  const { data: session } = useSession();
-
   return (
     <>
       <div className="bg-gray-50 p-4  dark:bg-slate-900">
@@ -11,7 +8,7 @@ function AccountSummary() {
           </h1>
         </header>
       </div>
-      <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto " >
+      <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto ">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           <div className="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800  cursor-pointer">
             <div className="p-4 md:p-5">
@@ -30,7 +27,7 @@ function AccountSummary() {
           </div>
 
           <div className="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800  cursor-pointer">
-            <div className="p-4 md:p-5 " >
+            <div className="p-4 md:p-5 ">
               <div className="flex items-center gap-x-2">
                 <p className="text-xs uppercase tracking-wide text-gray-500">
                   Loans and Credits
@@ -80,14 +77,6 @@ function AccountSummary() {
       </div>
     </>
   );
-}
-
-export async function getServerSideProps(context: any) {
-  return {
-    props: {
-      csrfToken: await getCsrfToken(context),
-    },
-  };
 }
 
 export default AccountSummary;
