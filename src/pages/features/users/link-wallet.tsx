@@ -8,11 +8,6 @@ function LinkWallet({ laterCallback }: { laterCallback: any }) {
   const [walletId, setWalletId] = useState("");
   const router = useRouter();
 
-  const reloadSession = () => {
-    const event = new Event("visibilitychange");
-    document.dispatchEvent(event);
-  };
-
   async function linkWallet(e: any) {
     fetch("/api/users/link", {
       method: "POST",
@@ -33,6 +28,11 @@ function LinkWallet({ laterCallback }: { laterCallback: any }) {
 
     e.preventDefault();
   }
+  //Hack to reload session, new version has add a way to update/reload.
+  const reloadSession = () => {
+    const event = new Event("visibilitychange");
+    document.dispatchEvent(event);
+  };
 
   return (
     <main className="w-full max-w-md mx-auto p-6 ">
