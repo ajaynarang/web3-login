@@ -13,7 +13,7 @@ This project is a prototype that demonstrates Web3 wallet login functionality. T
 ## Usage
 - **Open Demo Application**: Access this [demo](https://web3-login-five.vercel.app/) link to try out the application, or follow the instructions in the local setup section below.
 
-- **Wallet Setup** *(Skip if wallet is already installed)*: To begin, click on the 'Sign In with Web3 Wallet' button. This will provide you with the necessary links to download wallet applications as Chrome extensions or mobile apps. (We recommend starting with MetaMask).
+- **Wallet Setup** *(Skip if wallet is already installed)*: To begin, click on the 'Sign In with Web3 Wallet' button. This will provide you with the necessary links to download wallet applications as Chrome extensions or mobile apps. (I would recommend starting with MetaMask).
   - **Install the Wallet:** Download and install the chosen wallet extension or mobile application on your device.
   - **Launch the Wallet:** Open the installed wallet and follow the provided instructions to begin the setup process.
   - **Generate Seed Phrases:** You will be prompted to generate a set of seed phrases (aka a recovery phrase). These seed phrases are important for wallet restoration.
