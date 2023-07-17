@@ -34,14 +34,14 @@ This project is a prototype that demonstrates Web3 wallet login functionality. T
 Install dependencies
 ```bash
 npm run install
-# or
+or
 yarn install 
 ```
 Run the development server:
 
 ```bash
 npm run dev
-# or
+or
 yarn dev
 ```
 
