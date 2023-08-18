@@ -1,7 +1,7 @@
 function AccountSummary() {
   return (
     <>
-      <div className="bg-gray-50 p-4  dark:bg-slate-900">
+      <div className="bg-gray-50 p-4 ">
         <header>
           <h1 className="block text-2xl font-bold text-gray-800 sm:text-2xl dark:text-white">
             Account Summary

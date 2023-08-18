@@ -108,7 +108,7 @@ function LinkWallet({ laterCallback }: { laterCallback: any }) {
                   onClick={linkWallet}
                   className={primaryButtonClasses}
                 >
-                   {isLoading ? "Updating..." : "Update"}
+                  {isLoading ? "Updating..." : "Update"}
                 </button>
 
                 <button className="w-full py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold  hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
