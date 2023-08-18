@@ -1,4 +1,5 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import classnames from "classnames";
 import { getCsrfToken, signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -16,13 +17,16 @@ function SignIn() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleWalletLogin = async () => {
     try {
+      setIsLoading(true);
       const message = new SiweMessage({
         domain: window.location.host,
         address: address,
         statement:
-          "Sign in with your digital wallet to login to Fiserv application.",
+          "Sign in with your linked digital wallet to login to Fiserv application.",
         uri: window.location.origin,
         version: "1",
         chainId: chain?.id,
@@ -37,6 +41,8 @@ function SignIn() {
         redirect: false,
         signature,
       });
+
+      setIsLoading(false);
     } catch (error: any) {
       disconnect();
       setError(error.toString());
@@ -45,6 +51,7 @@ function SignIn() {
 
   const handleLogin = async (e: any) => {
     try {
+      setIsLoading(true);
       signIn("web2login", {
         username: userName,
         password: password,
@@ -56,9 +63,11 @@ function SignIn() {
             console.log(error);
             setError("Invalid Username or password!");
           }
+          setIsLoading(false);
         })
         .catch((e) => {
           setError(e.toString());
+          setIsLoading(false);
         });
       e.preventDefault();
     } catch (error: any) {
@@ -81,6 +90,17 @@ function SignIn() {
         });
     }
   }, [isConnected]);
+
+  const signInClasses = classnames(
+    `py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent 
+  font-semibold  text-white
+  focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 
+  transition-all text-sm dark:focus:ring-offset-gray-800`,
+    {
+      "bg-orange-500": !isLoading,
+      "bg-gray-300": isLoading,
+    }
+  );
 
   return (
     <main className="w-full max-w-md mx-auto p-6">
@@ -170,10 +190,11 @@ function SignIn() {
                 </div>
 
                 <button
-                  className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-orange-500 text-white hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                  className={signInClasses}
                   onClick={handleLogin}
+                  disabled={isLoading}
                 >
-                  Sign in
+                  {isLoading ? "Signing In..." : "Sign In"}
                 </button>
 
                 <div className="flex items-center text-xs text-gray-400 uppercase before:flex-[1_1_0%] before:border-t before:border-gray-200 before:mr-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ml-6 dark:text-gray-500 dark:before:border-gray-600 dark:after:border-gray-600">

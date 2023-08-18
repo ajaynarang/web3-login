@@ -47,7 +47,7 @@ export default function Header() {
                 signOut({ redirect: false }).then(() => router.push(`/`));
               }}
             >
-              <Link href="/features/users/link-wallet">Sign out</Link>
+              Sign out
             </button>
 
             {/* <a

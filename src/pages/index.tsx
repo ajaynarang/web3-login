@@ -6,13 +6,6 @@ import SignIn from "./features/users/signin";
 
 function Home() {
   const { data: session }: { data: any; status: string } = useSession();
-  const [isRegisterLater, setIsRegisterLater] = useState(false);
-
-  function updateSession(e: any) {
-    if (session) {
-      setIsRegisterLater(true);
-    }
-  }
 
   return (
     <Layout>

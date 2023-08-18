@@ -1,4 +1,5 @@
 import Layout from "@/components/layout";
+import classnames from "classnames";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -10,10 +11,12 @@ function Register() {
   const [username, setUserName] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   async function register(e: any) {
     const user = { id: username, name, username, password, walletId: null };
 
+    setIsLoading(true);
     fetch("/api/users/register", {
       method: "POST",
       headers: {
@@ -23,14 +26,25 @@ function Register() {
     })
       .then((response) => response.json())
       .then((data) => {
+        setIsLoading(false);
         router.push("/");
       })
       .catch((error) => {
+        setIsLoading(false);
         console.log(error);
       });
 
     e.preventDefault();
   }
+
+  const primaryButtonClasses = classnames(
+    `py-3  my-2 px-4 w-full inline-flex justify-center items-center gap-2 rounded-md border 
+    border-transparent font-semibold  text-white focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800`,
+    {
+      "bg-orange-500": !isLoading,
+      "bg-gray-300": isLoading,
+    }
+  );
 
   return (
     <Layout>
@@ -112,9 +126,9 @@ function Register() {
                 <button
                   type="submit"
                   onClick={register}
-                  className="py-3  my-2 px-4 w-full inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-orange-500 text-white hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                  className={primaryButtonClasses}
                 >
-                  Sign Up
+                  {isLoading ? "Signing Up..." : "Sign Up"}
                 </button>
 
                 <button

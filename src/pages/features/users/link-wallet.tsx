@@ -1,3 +1,4 @@
+import classnames from "classnames";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -7,8 +8,10 @@ function LinkWallet({ laterCallback }: { laterCallback: any }) {
   const { data: session }: { data: any; status: string } = useSession();
   const [walletId, setWalletId] = useState("");
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   async function linkWallet(e: any) {
+    setIsLoading(true);
     fetch("/api/users/link", {
       method: "POST",
       headers: {
@@ -18,10 +21,12 @@ function LinkWallet({ laterCallback }: { laterCallback: any }) {
     })
       .then((response) => response.json())
       .then((data) => {
+        setIsLoading(false);
         reloadSession();
         router.push("/");
       })
       .catch((error) => {
+        setIsLoading(false);
         console.log(error);
       });
 
@@ -32,6 +37,14 @@ function LinkWallet({ laterCallback }: { laterCallback: any }) {
     const event = new Event("visibilitychange");
     document.dispatchEvent(event);
   };
+
+  const primaryButtonClasses = classnames(
+    `py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold text-white focus:outline-none focus:ring-2  focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800`,
+    {
+      "bg-orange-500": !isLoading,
+      "bg-gray-300": isLoading,
+    }
+  );
 
   return (
     <main className="w-full max-w-md mx-auto p-6 ">
@@ -93,9 +106,9 @@ function LinkWallet({ laterCallback }: { laterCallback: any }) {
                 <button
                   type="submit"
                   onClick={linkWallet}
-                  className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-orange-500 text-white hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                  className={primaryButtonClasses}
                 >
-                  Update
+                   {isLoading ? "Updating..." : "Update"}
                 </button>
 
                 <button className="w-full py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold  hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
