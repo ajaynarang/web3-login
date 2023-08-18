@@ -2,7 +2,7 @@ export default function NoSessionHeader() {
   return (
     <header
       className="sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap 
-    z-[48] w-full  border-b text-sm py-2.5 sm:py-4 
+    z-[48] w-full text-sm py-2.5 sm:py-4 
     lg:pl-5 bg-gray-100 border-gray-700"
     >
       <nav className="flex basis-full items-center w-full " aria-label="Global">
